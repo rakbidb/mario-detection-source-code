@@ -3,12 +3,13 @@ from ultralytics import YOLO
 import os
 
 # Configuration
-DATA_YAML = 'path/to/your/data.yaml'  # Path to your dataset configuration
-PRETRAINED_WEIGHTS = 'yolov11s.pt'     # Pretrained weights (small model)
+DATA_YAML = '/kaggle/working/Mario-Detection-5/data.yaml'  # Path to your dataset configuration
+PRETRAINED_WEIGHTS = 'yolo11s.pt'     # Pretrained weights (small model)
 NUM_EPOCHS = 60
 BATCH_SIZE = 16
 IMAGE_SIZE = 1280
-def prepare_dataset():
+
+def prepare_dataset(yaml_path, train_images, val_images, test_images, num_classes, class_names):
     """
     Prepare dataset configuration file (data.yaml)
     
@@ -22,7 +23,15 @@ def prepare_dataset():
     names: ['class1', 'class2', ...]  # class names
     ```
     """
-    pass  # Placeholder for dataset preparation
+    # Prepare data.yaml
+    with open(yaml_path, 'w') as f:
+        f.write(f"train: {train_images}\n")
+        f.write(f"val: {val_images}\n")
+        f.write(f"test: {test_images}\n")
+        f.write(f"nc: {num_classes}\n")
+        f.write(f"names: {class_names}\n")
+    
+    print(f"Dataset configuration saved to {yaml_path}")
 
 def train_model():
     """
@@ -78,13 +87,16 @@ def test_model(model):
 
 def main():
     # Prepare dataset (ensure data.yaml is correctly set up)
-    prepare_dataset()
+    prepare_dataset(DATA_YAML, '/kaggle/working/Mario-Detection-5/train/images', '/kaggle/working/Mario-Detection-5/valid/images', '/kaggle/working/Mario-Detection-5/test/images', 1, "['mario']")
     
     # Train the model
     trained_model = train_model()
     
     # Validate on validation dataset
     validation_results = validate_model(trained_model)
+
+    print("Validation Results:")
+    print(validation_results)
     
     # Test on test dataset
     test_results = test_model(trained_model)
