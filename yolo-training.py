@@ -4,11 +4,10 @@ import os
 
 # Configuration
 DATA_YAML = 'path/to/your/data.yaml'  # Path to your dataset configuration
-PRETRAINED_WEIGHTS = 'yolov5s.pt'     # Pretrained weights (small model)
-NUM_EPOCHS = 50
+PRETRAINED_WEIGHTS = 'yolov11s.pt'     # Pretrained weights (small model)
+NUM_EPOCHS = 60
 BATCH_SIZE = 16
-IMAGE_SIZE = 1440
-
+IMAGE_SIZE = 1280
 def prepare_dataset():
     """
     Prepare dataset configuration file (data.yaml)
